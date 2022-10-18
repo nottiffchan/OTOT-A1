@@ -1,6 +1,11 @@
-FROM ubuntu
-RUN apt-get update
-RUN apt-get install nginx -y
-COPY index.html /var/www/html/
-EXPOSE 80
-CMD ["nginx","-g","daemon off;"]
+# Specify nginx image to build from
+FROM nginx
+
+# Remove existing nginx.conf
+RUN rm /etc/nginx/nginx.conf
+
+# Copy index.html to be served to server
+COPY index.html /usr/share/nginx/html
+
+# Copy new nginx.conf to server
+COPY ./nginx.conf /etc/nginx
